@@ -19,7 +19,7 @@ class Order extends Model {
     'notes'];
     //relation user Model(la commande appartienne à un utilisateur et un utilisateur peut avoir pleusieurs commandes)
     public function user(){
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
     //relation items Model (une commande contienne pleusieurs produits)
     public function items(){

@@ -18,6 +18,7 @@ class Product extends Model {
     'is_active',
     'is_feautred', 
     'in_stock', 
+    'is_auction',
     'on_sale' ];
 
     protected $casts=[
@@ -25,15 +26,15 @@ class Product extends Model {
     ];
     //relation category Model(le produit appartenir à la catégorie)
     public function category(){
-        return $this->belongTo(category::class);
+        return $this->belongsTo(category::class);
     }
     //relation brand Model(le produit appartenir à la brand)
     public function brand(){
-        return $this->belongTo(brand::class);
+        return $this->belongsTo(brand::class);
     } 
     //relation order Model(le produit appartenir à la commande produits)
     public function ordersItems(){
-        return $this->belongTo(OrderItem::class);
+        return $this->belongsTo(OrderItem::class);
     }       
 }
 
