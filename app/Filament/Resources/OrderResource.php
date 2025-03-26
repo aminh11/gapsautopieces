@@ -75,19 +75,19 @@ class OrderResource extends Resource
                                         'new' => 'New',
                                         'processing' => 'Processing',
                                         'shipped' => 'Shipped',
-                                        'delivred' => 'Delivred',
+                                        'delivered' => 'Delivered',
                                         'canceled' => 'Canceled', ]) 
                                     ->colors([
                                         'new' => 'info',
                                         'processing' => 'warning',
                                         'shipped' => 'success',
-                                        'delivred' => 'success',
+                                        'delivered' => 'success',
                                         'canceled' => 'danger', ])
                                     ->icons([
                                         'new' => 'heroicon-m-sparkles',
                                         'processing' => 'heroicon-m-arrow-path',
                                         'shipped' => 'heroicon-m-truck',
-                                        'delivred' => 'heroicon-m-check-badge',
+                                        'delivered' => 'heroicon-m-check-badge',
                                         'canceled' => 'heroicon-m-x-circle', ]),
                                     Select::make('currency')
                                          ->options([
@@ -201,7 +201,7 @@ class OrderResource extends Resource
                         'new' => 'New',
                         'processing' => 'Processing',
                         'shipped' => 'Shipped',
-                        'delivred' => 'Delivred',
+                        'delivered' => 'Delivered',
                         'canceled' => 'Canceled', ])
                     ->searchable()
                     ->sortable(),
