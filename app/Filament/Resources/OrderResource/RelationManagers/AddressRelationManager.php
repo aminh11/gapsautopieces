@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -58,7 +59,13 @@ class AddressRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('street_address')
             ->columns([
-                Tables\Columns\TextColumn::make('street_address'),
+                Tables\Columns\TextColumn::make('Fullname')
+                ->label('Fullname'),
+                TextColumn::make('phone'),
+                TextColumn::make('city'),
+                TextColumn::make('state'),
+                TextColumn::make('zip_code'),
+                TextColumn::make('street_address'),
             ])
             ->filters([
                 //
