@@ -1,40 +1,34 @@
 <?php
 
-namespace App\Filament\Resources\UserRessourceResource\RelationManagers;
+namespace App\Filament\Widgets;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
-use Dom\Text;
 use Filament\Tables\Actions\Action;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Widgets\TableWidget as BaseWidget;
 
-class OrdersRelationManager extends RelationManager
+class LatestOrders extends BaseWidget
 {
-    protected static string $relationship = 'orders';
-
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                //
-            ]);
-    }
-
+    protected int | string| array $columnSpan = 'full';
+    //afficher widgets de (OrderStats) en haut
+    protected static ?int $sort = 2;
     public function table(Table $table): Table
     {
         return $table
-        // Affiche la colonne 'id' avec le label personnalisé 'Order ID' et permet la recherche
-            ->recordTitleAttribute('id')
+            ->query(OrderResource::getEloquentQuery())
+            //afficherai 5 enregistrements par par defaut dans une seule page
+            ->defaultPaginationPageOption(5)
+            //adaptera aux commandes à partir de la plus récente
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('id')
                 ->label('Order ID')
+                ->searchable(),
+
+                TextColumn::make('user.name')
                 ->searchable(),
 
                 TextColumn::make('grand_total')
@@ -71,26 +65,13 @@ class OrdersRelationManager extends RelationManager
 
                 TextColumn::make('created_at')
                 ->label('Order Date')
-                ->dateTime()
+                ->dateTime(),
             ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                //Tables\Actions\CreateAction::make(),
-            ])
+            //boutton d'action pour voir les détails de la commande
             ->actions([
-//creation une action personalisé qui redirige vers la page de visualisation de la commande sélectionnée (orders)
-                Action::make('view Order')
-                ->url(fn(Order $record):string => OrderResource::getUrl('view',['record' => $record]))
-                ->color('info')
-                ->icon('heroicon-o-eye'),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Action::make('View Order')
+                ->url(fn(Order $record): string => OrderResource::getUrl('view', ['record' => $record]))
+                ->icon('heroicon-o-eye')
             ]);
     }
 }
