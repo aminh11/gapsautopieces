@@ -16,24 +16,23 @@ class Product extends Model {
     'description', 
     'price', 
     'is_active',
-    'is_feautred', 
-    'in_stock', 
-    'is_auction',
-    'on_sale' ];
+    'is_featured', 
+    'in_stock',
+    'on_sale', ];
 
     protected $casts=[
         'image'=>'array',
     ];
     //relation category Model(le produit appartenir à la catégorie)
     public function category(){
-        return $this->belongsTo(category::class);
+        return $this->belongsTo(Category::class);
     }
     //relation brand Model(le produit appartenir à la brand)
     public function brand(){
-        return $this->belongsTo(brand::class);
+        return $this->belongsTo(Brand::class);
     } 
     //relation order Model(le produit appartenir à la commande produits)
-    public function ordersItems(){
+    public function orderItems(){
         return $this->belongsTo(OrderItem::class);
     }       
 }

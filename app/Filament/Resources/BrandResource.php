@@ -56,6 +56,7 @@ class BrandResource extends Resource
                             ]),
                         Textarea::make('description')
                             ->columnSpanFull(),
+                            
                         FileUpload::make('image')
                             ->image()
                             ->directory('categories'),

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->boolean('is_featured')->default(false); 
             $table->boolean('in_stock')->default(true);
             $table->boolean('on_sale')->default(false);
-            $table->boolean('is_auction')->default(false);
             $table->timestamps();
         });
     }

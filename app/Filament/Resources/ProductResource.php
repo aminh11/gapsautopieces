@@ -19,12 +19,15 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Illuminate\Support\Str;
 use Filament\Forms\Set;
+use Filament\Support\Markdown;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -42,64 +45,80 @@ class ProductResource extends Resource
             ->schema([
                 Section::make('Item Details')
                     ->schema([
-                        Grid::make()
-                            ->schema([
+                        Group::make()->schema([
+                            Section::make('Product Information')->schema([
                                 TextInput::make('name')
                                     ->required()
                                     ->maxLength(255)
-                                    ->live()
-                                    ->afterStateUpdated(fn (Set $set, $state) => $set('slug', Str::slug($state))),
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function (string $operation, $state, Set $set) {
+                                        if ($operation !== 'create') {
+                                            return;
+                                        }
+                                        $set('slug', Str::slug($state));
+                                    }),
 
                                 TextInput::make('slug')
                                     ->maxLength(255)
                                     ->disabled()
                                     ->required()
+                                    ->dehydrated()
                                     ->unique(Product::class, 'slug', ignoreRecord: true),
-                            ]),
-                        Textarea::make('description')
-                            ->columnSpanFull(),
-                        FileUpload::make('image')
-                            ->image()
-                            ->directory('items'),
-                        TextInput::make('starting_price')
-                            ->label('Starting Price')
-                            ->numeric()
-                            ->hidden(fn ($get) => ! $get('is_auction'))
-                            ->required(fn ($get) => $get('is_auction')),
-                        Grid::make(2)
-                            ->schema([
+
+                                MarkdownEditor::make('description')
+                                    ->columnSpanFull()
+                                    ->fileAttachmentsDirectory('products'),
+                            ])->columns(2),
+
+                            Section::make('Images')->schema([
+                                FileUpload::make('images')
+                                    ->multiple()
+                                    ->directory('products')
+                                    ->maxFiles(6)
+                                    ->reorderable()
+                            ])
+                        ])->columnSpan(2),
+
+                        Group::make()->schema([
+                            Section::make('price')->schema([
                                 TextInput::make('price')
-                                    ->label('Price')
-                                    ->numeric()
                                     ->required()
+                                    ->type('number')
                                     ->prefix('TND')
-                                    ->columnSpan(1),
+                            ]),
+
+                            Section::make('Associations')->schema([
                                 Select::make('category_id')
-                                    ->label('Category')
-                                    ->relationship('category', 'name')
                                     ->required()
                                     ->searchable()
                                     ->preload()
-                                    ->columnSpan(1),
+                                    ->relationship('category', 'name'),
+
+                                Select::make('brand_id')
+                                    ->required()
+                                    ->searchable()
+                                    ->preload()
+                                    ->relationship('brand', 'name')
                             ]),
-                        Section::make('Status')
-                            ->schema([
+
+                            Section::make('Status')->schema([
                                 Toggle::make('in_stock')
-                                    ->label('In Stock')
                                     ->required()
                                     ->default(true),
+
                                 Toggle::make('is_active')
-                                    ->label('Is Active')
-                                    ->required(),
-                                Toggle::make('is_feautred')
-                                    ->label('Is Featured')
-                                    ->required(),
-                                Toggle::make('is_auction')
-                                    ->label('Auction')
-                                    ->live()
-                                    ->default(false),
-                            ]),
-                    ]),
+                                    ->required()
+                                    ->default(true),
+
+                                Toggle::make('is_featured')
+                                    ->required()
+                                    ->default(true),
+
+                                Toggle::make('on_sale')
+                                    ->required()
+                            ])
+                        ])->columnSpan(1),
+                    ])->columns(3)
             ]);
     }
 
@@ -109,25 +128,34 @@ class ProductResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                ImageColumn::make('image'),
+
+                TextColumn::make('category.name')
+                    ->sortable(),
+                    
+                TextColumn::make('brand.name')
+                    ->sortable(),
+
                 TextColumn::make('price')
                     ->money('TND')
                     ->sortable(),
+
+                IconColumn::make('is_featured')
+                    ->boolean(),
+
+                IconColumn::make('on_sale')
+                    ->boolean(), 
+
+                IconColumn::make('in_stock')
+                    ->boolean(),
+
                 IconColumn::make('is_active')
-                    ->label('Active')
-                    ->boolean(),
-                IconColumn::make('is_auction')
-                    ->label('Auction')
-                    ->boolean(),
-                TextColumn::make('starting_price')
-                    ->label('Starting Price')
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->boolean(),                    
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -136,7 +164,8 @@ class ProductResource extends Resource
             ->filters([
                 SelectFilter::make('category')
                     ->relationship('category', 'name'),
-                    SelectFilter::make('brand')
+
+                SelectFilter::make('brand')
                     ->relationship('brand', 'name'),
             ])
             ->actions([
@@ -155,9 +184,7 @@ class ProductResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

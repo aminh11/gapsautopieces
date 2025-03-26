@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
 use App\Models\Order;
 use App\Models\Product;
 use BcMath\Number;
@@ -127,8 +128,9 @@ class OrderResource extends Resource
                                 ->minValue(1)
                                 ->columnSpan(2)
                                 ->reactive()
-                                ->afterStateUpdated(fn ($state, Set $set, Get $get) => $set('total_amount', $state['unit_amount'] * $state['quantity'])),
-
+                                ->afterStateUpdated(fn ($state, Set $set, Get $get) =>
+                                $set('total_amount', (float) $get('unit_amount') * (int) $get('quantity'))
+                            ),
                             TextInput::make('unit_amount')
                                 ->type('number')
                                 ->required()
@@ -234,7 +236,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // 
+            AddressRelationManager::class
         ];
     }
     //fonction pour afficher le nombre de commandes dans la barre de navigation

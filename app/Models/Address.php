@@ -17,10 +17,10 @@ class Address extends Model{
         'zip_code' 
     ];
     public function order(){
-        return $this->belongTo(Order::class);
+        return $this->belongsTo(Order::class);
     }  
     //fonction pour obtenir l'attribut pour combiner le prénom et le nom de famille pour obtenir le nom complet
-    public function getFullNameAttributs(){
+    public function getFullNameAttribute(){
         return "{$this->first_name} {$this->last_name}";
     }            
 }
