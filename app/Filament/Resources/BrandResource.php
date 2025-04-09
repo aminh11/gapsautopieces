@@ -2,54 +2,70 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BrandResource\Pages;
-use App\Models\Brand;
 use Filament\Forms;
+use Filament\Tables;
+use App\Models\Brand;
 use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Section;
+use App\Filament\Resources\BrandResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\BrandResource\RelationManagers;
+use App\Models\Category;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\FileUpload;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
-use Illuminate\Support\Str;
+use Filament\Forms\Set;
 
 class BrandResource extends Resource
 {
     protected static ?string $model = Brand::class;
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+    protected static ?string $navigationIcon = 'heroicon-o-wrench';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Brand Information')
+                Section::make('Category Details')
                     ->schema([
-                        Grid::make(2)
+                        Grid::make()
                             ->schema([
                                 TextInput::make('name')
                                     ->required()
                                     ->maxLength(255)
-                                    ->afterStateUpdated(fn (string $operation, $state, $set) => 
-                                        $operation === 'create' ? $set('slug', Str::kebab($state)) : null),
+                                    ->live(onBlur:true)
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation 
+                                    === 'create'? $set('slug', Str::slug($state)) : null),
+
                                 TextInput::make('slug')
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
                                     ->maxLength(255)
-                                    ->unique(Brand::class, 'slug', ignoreRecord: true),
+                                    ->disabled()
+                                    ->required()
+                                    ->dehydrated()
+                                    ->unique(Brand::class, 'slug', ignoreRecord: true)
                             ]),
-                            FileUpload::make('image') // Téléchargement d'image
-                            ->image()   
-                            ->directory('brands'), 
-                        Toggle::make('is_active')     
-                            ->default(true)             
-                            ->required(),
+                        Textarea::make('description')
+                            ->columnSpanFull(),
+                            
+                        FileUpload::make('image')
+                            ->image()
+                            ->directory('categories'),
+                        Toggle::make('is_active')
+                            ->label('Active')
+                            ->required()
+                            ->default(true),
                     ]),
             ]);
     }
@@ -60,9 +76,7 @@ class BrandResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image')
-                    ->disk('public') // Vérifier que le disque est bien public
-                    ->url(fn ($record) => asset('storage/brands/' . $record->image)), // Générer l'URL de l'image
+                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
@@ -76,13 +90,16 @@ class BrandResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->filters([
+                //
+            ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
                 ]),
-            ])  
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -93,7 +110,7 @@ class BrandResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Définir des relations ici si nécessaire
+            //
         ];
     }
 

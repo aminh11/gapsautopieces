@@ -3,19 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\UserRessourceResource\RelationManagers\OrdersRelationManager;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Form;
-use Filament\Pages\Page;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -23,29 +17,30 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $navigationLabel = 'Users';
+
+// Définit l'ordre de tri de l'élément de navigation dans le menu
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                // 1
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                // 2
                 Forms\Components\TextInput::make('email')
                     ->label('Email Address')
                     ->email()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->required(),
-                // 3
                 Forms\Components\DateTimePicker::make('email_verified_at')
-                    ->label('Email Verified At')
+                    ->label('Email Verified at')
                     ->default(now()),
-                // 4
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->dehydrateStateUsing(fn ($state) => filled($state))
-                    ->required(fn (Page $livewire) : bool => $livewire instanceof CreateRecord),
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn ($livewire): bool => $livewire instanceof Pages\CreateUser),
             ]);
     }
 
@@ -61,17 +56,16 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Created at')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable(),
             ])
-            ->filters([
-                // Define filters here
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 ])
             ])
             ->bulkActions([
@@ -84,8 +78,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Define relations here if needed
-        ];
+            'orders' => OrdersRelationManager::class
+    ];
     }
 
     public static function getPages(): array

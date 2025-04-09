@@ -4,56 +4,65 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Models\Category;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationLabel = 'Categories';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Category Information') 
+                Section::make('Category Details')
                     ->schema([
                         Grid::make()
                             ->schema([
                                 TextInput::make('name')
                                     ->required()
                                     ->maxLength(255)
-                                    ->afterStateUpdated(fn (string $operation, $state, $set) => 
-                                        $operation === 'create' ? $set('slug', str()->kebab($state)) : null),
-                                TextInput::make('slug') 
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
+                                    ->live(onBlur:true)
+                                    ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation 
+                                    === 'create'? $set('slug', Str::slug($state)) : null),
+
+                                TextInput::make('slug')
                                     ->maxLength(255)
-                                    ->unique(Category::class, 'slug', ignoreRecord: true),
+                                    ->disabled()
+                                    ->required()
+                                    ->dehydrated()
+                                    ->unique(Category::class, 'slug', ignoreRecord: true)
                             ]),
-                        
-                        FileUpload::make('image') // Téléchargement d'image
-                            ->image()   
-                            ->directory('categories'), 
-                        Toggle::make('is_active')     
-                            ->default(true)             
-                            ->required(),
-                    ])
+                        Textarea::make('description')
+                            ->columnSpanFull(),
+                        FileUpload::make('image')
+                            ->image()
+                            ->directory('categories'),
+                        Toggle::make('is_active')
+                            ->label('Active')
+                            ->required()
+                            ->default(true),
+                    ]),
             ]);
     }
 
@@ -67,6 +76,7 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label('Active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -77,9 +87,7 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                // Ajouter des filtres ici si nécessaire
-            ])
+            ->filters([])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make(),
@@ -96,9 +104,7 @@ class CategoryResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            // Définir des relations ici si nécessaire
-        ];
+        return [];
     }
 
     public static function getPages(): array
