@@ -2,55 +2,35 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Filament\Resources\UserRessourceResource\RelationManagers\OrdersRelationManager;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class ClientResource extends Resource
 {
     protected static ?string $model = User::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationLabel = 'Admins';
-
-// Définit l'ordre de tri de l'élément de navigation dans le menu
-    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel = 'Clients';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required(),
-                Forms\Components\TextInput::make('email')
-                    ->label('Email Address')
-                    ->email()
-                    ->maxLength(255)
-                    ->unique(ignoreRecord: true)
-                    ->required(),
 
-                Hidden::make('type')
-                    ->default('admin')
-                    ->dehydrated(),
-                
-                
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrated(fn ($state) => filled($state))
-                    ->required(fn ($livewire): bool => $livewire instanceof Pages\CreateUser),
             ]);
     }
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
         {
-            return parent::getEloquentQuery()->where('type', 'admin');
+            return parent::getEloquentQuery()->where('type', 'client');
         }
 
     public static function table(Table $table): Table
@@ -81,13 +61,21 @@ class UserResource extends Resource
                 ]),
             ]);
     }
+    
+    public static function getRelations(): array
+    {
+        return [
+            'orders' => OrdersRelationManager::class
+    ];
+    }
+
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListClients::route('/'),
+            'create' => Pages\CreateClient::route('/create'),
+            'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
     }
 }
