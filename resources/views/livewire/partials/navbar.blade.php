@@ -21,25 +21,51 @@
       <div id="navbar-collapse-with-animation" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block">
         <div class="flex flex-col md:flex-row md:items-center md:justify-end md:gap-x-7">
 
-          <a class="font-medium text-gray-500 hover:text-gray-400 py-3 md:py-6 dark:text-gray-400" href="/">Accueil</a>
-          <a class="font-medium text-gray-500 hover:text-gray-400 py-3 md:py-6 dark:text-gray-400" href="/catalogue">Catalogue</a>
-          <a class="font-medium text-gray-500 hover:text-gray-400 py-3 md:py-6 dark:text-gray-400" href="/encheres">Enchères</a>
-          <a class="font-medium text-gray-500 hover:text-gray-400 py-3 md:py-6 dark:text-gray-400" href="/pieceoccassion">Pièces Occasion</a>
-          <a class="font-medium flex items-center text-gray-500 hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/cart">
+          <!--dynamique-->
+          <a wire:navigate class="font-medium {{ request()->is('/') ? 'text-black' : 'text-orange-600' }} 
+            hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 
+            dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
+            href="/">Accueil
+          </a>
+
+          <a wire:navigate class="font-medium {{ request()->is('catalogue') ? 'text-black' : 'text-orange-600' }} 
+            hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 
+            dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
+            href="/catalogue">Catalogue
+          </a>
+
+          <a wire:navigate class="font-medium {{ request()->is('encheres') ? 'text-black' : 'text-orange-600' }} 
+            hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 
+            dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
+            href="/encheres">Enchères
+          </a>
+          
+          <a wire:navigate class="font-medium {{ request()->is('pieceoccassion') ? 'text-black' : 'text-orange-600' }} 
+            hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 
+            dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" 
+            href="/pieceoccassion">Pièces Occasion
+          </a>
 
           <!-- Panier -->
-          <a class="font-medium flex items-center text-gray-500 hover:text-gray-400 py-3 md:py-6 dark:text-gray-400" href="/cart">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="flex-shrink-0 w-5 h-5 mr-1">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          <a wire:navigate class="font-medium flex items-center gap-1 
+            {{ request()->is('cart') ? 'text-black' : 'text-orange-600' }}  
+            hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 
+            dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/cart">
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="black" class="w-5 h-5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 
+              1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 
+              1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 
+              .375.375 0 0 1 .75 0Z" />
             </svg>
             <span class="mr-1">Panier</span>
-            <span class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">
-              4
-            </span>
+            <span class="py-0.5 px-1.5 rounded-full text-xs font-medium bg-blue-50 border border-blue-200 text-blue-600">4</span>
           </a>
 
           <!-- Login -->
-          <a class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700" href="/Seconnecter">
+          <a wire:navigate class="py-2.5 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700" href="/login">
             <svg class="flex-shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
