@@ -2,7 +2,9 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\Title;
 use Livewire\Component;
+#[Title('Pieces occassion - GAPS')]
 
 class DetailpieceoccassionPage extends Component
 {
