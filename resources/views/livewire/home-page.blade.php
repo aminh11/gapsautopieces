@@ -109,7 +109,8 @@
   </div>
 </div>
 
-
+{{-- Pièces d'Occasion --}}
+{{-- filtres --}}
   <div class="py-20 px-4 lg:px-20 bg-white">
     <div class="max-w-7xl mx-auto">
   
@@ -132,7 +133,7 @@
       </div>
   
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-  
+  {{-- cartes --}}
         <!-- Card 1 -->
         <div class="bg-white border rounded-lg overflow-hidden shadow hover:shadow-lg">
           <img src="https://i.imgur.com/AMo4eoK.png" alt="Phare" class="w-full h-44 object-cover">
@@ -178,13 +179,12 @@
         </div>
   
       </div>
-  
+  {{-- boutton catalogue--}}
       <div class="flex justify-center mt-10">
         <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold text-sm">
           Explorer le Catalogue
         </a>
       </div>
-  
     </div>
 
 </div>
