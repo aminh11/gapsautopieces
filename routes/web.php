@@ -9,6 +9,7 @@ use App\Livewire\CartPage;
 use App\Livewire\CataloguePage;
 use App\Livewire\DetailmescommandesPage;
 use App\Livewire\DetailpieceoccassionPage;
+use App\Livewire\EncheresPages;
 use App\Livewire\HomePage;
 use App\Livewire\MescommandesPages;
 use App\Livewire\PieceoccassionPages;
@@ -30,6 +31,7 @@ Route::get('/forgot', ForgotPasswordPage ::class);
 Route::get('/reset', ResetPasswordPage ::class);
 Route::get('/success', SuccessPage::class);
 Route::get('/cancel', CancelPage::class);
+Route::get('/encheres',EncheresPages::class);
 
 
 
