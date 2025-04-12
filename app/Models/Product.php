@@ -12,7 +12,7 @@ class Product extends Model {
     'brand_id', 
     'name', 
     'slug', 
-    'image', 
+    'images', 
     'description', 
     'price', 
     'is_active',
@@ -21,7 +21,7 @@ class Product extends Model {
     'on_sale', ];
 
     protected $casts=[
-        'image'=>'array',
+        'images'=>'array',
     ];
     //relation category Model(le produit appartenir à la catégorie)
     public function category(){

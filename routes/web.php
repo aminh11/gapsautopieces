@@ -21,7 +21,7 @@ Route::get('/', HomePage::class);
 Route::get('/catalogue',CataloguePage::class);
 Route::get('/pieceoccassion',PieceoccassionPages::class);
 Route::get('/cart',CartPage::class);
-Route::get('/pieceoccassion/{pieceoccassion}', DetailpieceoccassionPage::class);
+Route::get('/pieceoccassion/{slug}', DetailpieceoccassionPage::class);
 Route::get('/verifierpaiment',VerifierpaiementPage::class);
 Route::get('/mescommandes',MescommandesPages::class);
 Route::get('/mescommandes/{commande}', DetailmescommandesPage::class);

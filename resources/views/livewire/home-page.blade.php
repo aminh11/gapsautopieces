@@ -16,12 +16,12 @@
         </p>
 
         <div class="flex flex-wrap gap-4">
-          <a href="#"
+          <a href="/encheres"
             class="py-3 px-6 inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg">
             Explorer les Enchères
           </a>
 
-          <a href="#"
+          <a href="/pieceoccassion"
             class="py-3 px-6 inline-block bg-black text-white font-semibold rounded-lg hover:bg-blue-600">
             Voir les Pièces d'Occasion
           </a>
@@ -144,7 +144,7 @@
     </button>
   </div>
 </div>
-
+<!--pieceoccassion -->
   <div class="py-20 px-4 lg:px-20 bg-white">
     <div class="max-w-7xl mx-auto">
       
@@ -167,16 +167,9 @@
         @endforeach
         </div>
         
-        
-      
-
-
-
-  
-
   {{-- boutton catalogue--}}
       <div class="flex justify-center mt-10">
-        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold text-sm">
+        <a href="/catalogue" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold text-sm">
           Explorer le Catalogue
         </a>
       </div>

@@ -21,7 +21,7 @@
         </div>
       </div>
   
-      <!-- Continue les autres catégories de la même façon -->
+      
   
     </div>
   </div>

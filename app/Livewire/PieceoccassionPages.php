@@ -2,14 +2,26 @@
 
 namespace App\Livewire;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-#[Title('Page pieces - GAPS')]
+use Livewire\WithPagination;
+
+#[Title('Page produits - GAPS')]
 
 class PieceoccassionPages extends Component
 {
-    public function render()
+    use WithPagination;
+
+    public function render() 
     {
-        return view('livewire.pieceoccassion-pages');
+        $pieceoocassionQuery = Product::query()->where('is_active', 1);
+        return view('livewire.pieceoccassion-pages',[
+            'pieceoccassion' => $pieceoocassionQuery->paginate(6),
+            'brands' => Brand::where ('is_active', 1)->get(['id', 'name', 'slug']),
+            'catalogue' =>Category::where('is_active', 1)->get(['id', 'name', 'slug']),
+        ]);
     }
 }

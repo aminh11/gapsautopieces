@@ -140,7 +140,11 @@ class ProductResource extends Resource
                 TextColumn::make('price')
                     ->money('TND')
                     ->sortable(),
-
+                    ImageColumn::make('images')
+                    ->label('Image')
+                    ->limit(1)
+                    ->circular(),
+                    
                 IconColumn::make('is_featured')
                     ->boolean(),
 
