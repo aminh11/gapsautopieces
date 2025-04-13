@@ -20,6 +20,7 @@ class ClientResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Clients';
+    protected static ?string $modelLabel ='Clients';
 
     public static function form(Form $form): Form
     {
@@ -39,8 +40,6 @@ class ClientResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created at')

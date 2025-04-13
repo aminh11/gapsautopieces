@@ -20,6 +20,7 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Admins';
+    protected static ?string $modelLabel = 'Admins';
 
 // Définit l'ordre de tri de l'élément de navigation dans le menu
     protected static ?int $navigationSort = 1;
@@ -58,9 +59,6 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime(),
                 Tables\Columns\TextColumn::make('type'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created at')
