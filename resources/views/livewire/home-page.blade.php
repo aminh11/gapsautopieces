@@ -58,7 +58,7 @@
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-2">
       @foreach ($brands as $brand)
       <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key="{{ $brand->id }}">
-        <a href="#" class=''>
+        <a href="/pieceoccassion?selected_brands[0]={{ $brand->id }}" class=''>
           <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" class="object-cover w-full h-64 rounded-t-lg">
         </a>
         <div class="p-5 text-center">
@@ -144,13 +144,13 @@
     </button>
   </div>
 </div>
-<!--pieceoccassion -->
+<!--pieceoccassion (catalogue catégories) -->
   <div class="py-20 px-4 lg:px-20 bg-white">
     <div class="max-w-7xl mx-auto">
       
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         @foreach ($pieceoccassion as $pieceoccassion)
-        <a href="#" wire:key="{{ $pieceoccassion->id }}" 
+        <a href="/pieceoccassion?selected_catalogue[0]= {{ $pieceoccassion->id }}" wire:key="{{ $pieceoccassion->id }}" 
            class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition duration-300">
         
             <img src="{{ url('storage/'.$pieceoccassion->image) }}" 

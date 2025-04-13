@@ -28,7 +28,7 @@ class PieceoccassionPages extends Component
     #[Url]
     public $on_sale;
     #[Url]
-    public $price_range = 50;
+    public $price_range = 0;
 
 
 

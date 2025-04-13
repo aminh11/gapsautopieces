@@ -44,8 +44,12 @@
                 </p>
 
                 <p class="max-w-md text-gray-700 dark:text-gray-400">
-                  <!--méthode markdown convertira markdowsn en HTML-->
-                  {!! Str::markdown($pieceoccassion->description) !!}
+      {{-- Vérifie si la description existe, si oui l'affiche en Markdown sinon affiche un message par défaut --}}
+                  @if($pieceoccassion->description)
+                      {!! Str::markdown($pieceoccassion->description) !!}
+                  @else
+                <p class="text-gray-500">Aucune description disponible</p>
+                  @endif
                 </p>
               </div>
               <div class="w-32 mb-8 ">

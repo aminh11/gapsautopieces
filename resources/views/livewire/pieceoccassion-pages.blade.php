@@ -5,9 +5,8 @@
           <div class="w-full pr-2 lg:w-1/4 lg:block">
             <div class="p-4 mb-5 bg-white border border-gray-200 dark:border-gray-900 dark:bg-gray-900">
               <h2 class="text-2xl font-bold dark:text-gray-400"> Catégories</h2>
-              
+     <!--catégories-->
               <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
-  <!--catégories-->
               <ul>
                @foreach ($catalogue as $category)
                 <li class="mb-4" wire:key="{{ $category->id }}">
@@ -18,10 +17,10 @@
                 </li>
                    
                @endforeach
-
               </ul>
-  <!--marque-->
             </div>
+            
+         <!--marque-->
             <div class="p-4 mb-5 bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-900">
               <h2 class="text-2xl font-bold dark:text-gray-400">Marque</h2>
               <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
@@ -66,7 +65,7 @@
                 <input type="range" wire:model.live='price_range'  class="w-full h-1 mb-4 bg-blue-100 rounded appearance-none cursor-pointer" 
                 max="10000" value="0" step="100">
                 <div class="flex justify-between ">
-                  <span class="inline-block text-lg font-bold text-blue-400 ">{{ Number::currency(0, 'TND') }}</span>
+                  <span class="inline-block text-lg font-bold text-blue-400 ">{{ Number::currency(50, 'TND') }}</span>
                   <span class="inline-block text-lg font-bold text-blue-400 ">{{ Number::currency(10000, 'TND') }}</span>
                 </div>
               </div>
