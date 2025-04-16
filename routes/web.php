@@ -16,28 +16,38 @@ use App\Livewire\PieceoccassionPages;
 use App\Livewire\SuccessPage;
 use App\Livewire\VerifierpaiementPage;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', HomePage::class);
-Route::get('/catalogue',CataloguePage::class);
-Route::get('/pieceoccassion',PieceoccassionPages::class);
-Route::get('/cart',CartPage::class);
+Route::get('/catalogue', CataloguePage::class);
+Route::get('/pieceoccassion', PieceoccassionPages::class);
+Route::get('/cart', CartPage::class);
 Route::get('/pieceoccassion/{slug}', DetailpieceoccassionPage::class);
-Route::get('/verifierpaiment',VerifierpaiementPage::class);
-Route::get('/mescommandes',MescommandesPages::class);
-Route::get('/mescommandes/{commande}', DetailmescommandesPage::class);
-Route::get('/login', LoginPage::class);
-Route::get('/register', RegisterPage::class);
-Route::get('/forgot', ForgotPasswordPage ::class);
-Route::get('/reset', ResetPasswordPage ::class);
-Route::get('/success', SuccessPage::class);
-Route::get('/cancel', CancelPage::class);
-Route::get('/encheres',EncheresPages::class);
 
+// Middleware invité
+Route::middleware('guest')->group(function () {
+    Route::get('/login', LoginPage::class);
+    Route::get('/register', RegisterPage::class);
+    Route::get('/forgot', ForgotPasswordPage::class);
+    Route::get('/reset', ResetPasswordPage::class);
+});
 
+// Middleware authentifié
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    })->name('logout');
 
+    Route::get('/verifierpaiment', VerifierpaiementPage::class);
+    Route::get('/mescommandes', MescommandesPages::class);
+    Route::get('/mescommandes/{commande}', DetailmescommandesPage::class);
+    Route::get('/success', SuccessPage::class);
+    Route::get('/cancel', CancelPage::class);
+    Route::get('/encheres', EncheresPages::class);
+});
 
-
-// Test route (optional)
+// Test View
 Route::get('/test-view', function () {
     return view('livewire.components.layouts.app');
 });

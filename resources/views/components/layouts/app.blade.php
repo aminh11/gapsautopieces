@@ -22,6 +22,11 @@
         </main>
         @livewire('partials.footer')
         @livewireScripts
+        @livewireStyles
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <livewire:notifications />
+        
+        
     </body>
     
     </html>
