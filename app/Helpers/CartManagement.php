@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cookie;
 
 class CartManagement{
     // Ajouter un article au panier
-    static public function addItemToCart($pieceoccassion_id)
+    static Public function addItemToCart($pieceoccassion_id)
     {
         $cart_items = self::getCartItemsFromCookie();
         $existing_item = null;

@@ -17,11 +17,11 @@ class EncheresPages extends Component
     {
         // Get active auctions
         $activeAuctions = Auction::where('is_active', true)
-            ->where('status', 'active')
-            ->where('start_date', '<=', now())
-            ->where('end_date', '>=', now())
-            ->with(['product', 'bids.user'])
-            ->paginate(8);
+        ->where('status', 'active')
+        // ->where('start_date', '<=', now())
+        // ->where('end_date', '>=', now())
+        ->with(['product', 'bids.user'])
+        ->paginate(8);
 
         // Get upcoming auctions
         $upcomingAuctions = Auction::where('is_active', true)

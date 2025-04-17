@@ -8,10 +8,6 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
-
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        @livewireStyles
     </head>
     
     <body class="bg-slate-200 dark:bg-slate-700">
@@ -22,7 +18,6 @@
         </main>
         @livewire('partials.footer')
         @livewireScripts
-        @livewireStyles
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <livewire:notifications />
         

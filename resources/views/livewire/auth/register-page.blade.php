@@ -7,7 +7,7 @@
                       <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">S'inscrire</h1>
                       <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                           Vous avez déjà un compte ?
-                          <a href="/login" class="text-blue-600 hover:underline font-medium">Se connecter</a>
+                          <a wire.navigate href="/login" class="text-blue-600 hover:underline font-medium">Se connecter</a>
                       </p>
                   </div>
 
