@@ -29,7 +29,7 @@ class DetailpieceoccassionPage extends Component
     }
     public function addToCart($pieceoccassion_id)
     {
-        $total_count = CartManagement::addItemToCart($pieceoccassion_id);
+        $total_count = CartManagement::addItemToCartwithQty($pieceoccassion_id, $this->quantity);   
         $this->dispatch('update-cart-count', total_count: $total_count)->to(Navbar::class);
 
         LivewireAlert::title('Ajouté...')->success()
