@@ -17,28 +17,42 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+
+                <!--dynamique pour produits dans panier page-->
+                @forelse ($cart_items as $item)
+                <tr wire:key='{{ $item['product_id'] }}'>
                   <td class="py-4">
                     <div class="flex items-center">
-                      <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Image produit">
-                      <span class="font-semibold">Nom du Produit</span>
+                      <img class="h-16 w-16 mr-4" src="{{ url ('storage', $item['image']) }}" alt="I$item['name']}}">
+                      <span class="font-semibold">{{ $item['name'] }}</span>
                     </div>
                   </td>
-                  <td class="py-4">19,99 TND</td>
+
+                  <td class="py-4">{{ Number::currency($item['unit_amount'], 'TND') }}
+                  </td>
+
                   <td class="py-4">
                     <div class="flex items-center">
-                      <button class="border rounded-md py-2 px-4 mr-2">-</button>
-                      <span class="text-center w-8">1</span>
-                      <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                      <span class="text-center w-8">{{ $item['quantity'] }}</span>
                     </div>
                   </td>
-                  <td class="py-4">19,99 TND</td>
+                   <!-- le montant totatl est calculé automatiquement en fonction de la quantité et monatant unitaitre -->
+                  <td class="py-4">{{ Number::currency($item['total_amount'], 'TND') }}</td>
                   <td>
-                    <button class="bg-slate-300 border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 hover:text-white hover:border-red-700">
-                      Supprimer
-                    </button>
+                    <button wire:click='removeItem({{ $item['product_id'] }})' class="bg-slate-300 
+                    border-2 border-slate-400 rounded-lg px-3 py-1 hover:bg-red-500 
+                    hover:text-white hover:border-red-700"><span wire:loading.remove wire:target='removeItem({{ $item
+                    ['product_id'] }})'>Supprimer</span><span wire:loading wire:target='removeItem({{ $item
+                    ['product_id'] }})'>Supprimé...</span></button>
                   </td>
                 </tr>
+                @empty
+                <tr>
+                  <td colspan="5" class="text-center py-4 text-4xl font-semibold -text-slate-5000">
+                    Aucun article disponible dans le panier!</td>
+                </tr>
+                   
+                @endforelse
                 <!-- Ajouter ici les autres produits -->
               </tbody>
             </table>
@@ -52,29 +66,29 @@
   
             <div class="flex justify-between mb-2">
               <span>Sous-total</span>
-              <span>19,99 TND</span>
+              <span>{{ Number::currency($grand_total, 'TND') }}</span>
             </div>
   
             <div class="flex justify-between mb-2">
               <span>Taxes</span>
-              <span>1,99 TND</span>
+              <span>{{ Number::currency(0, 'TND') }}</span>
             </div>
   
             <div class="flex justify-between mb-2">
               <span>Livraison</span>
-              <span>Gratuite</span>
+              <span>{{ Number::currency(0, 'TND') }}</span>
             </div>
   
             <hr class="my-2">
-  
             <div class="flex justify-between mb-2">
               <span class="font-semibold">Total à payer</span>
-              <span class="font-semibold">21,98 TND</span>
+              <span class="font-semibold">{{ Number::currency($grand_total, 'TND') }}</span>
             </div>
-  
-            <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full hover:bg-blue-600">
-              Passer à la caisse
-            </button>
+            <!-- Vérifier condition s'il ya a un article de panier disponible alors seulmenet nous afficherons ce bouton de paiment 
+            sinon ce bouton ne sera pas visible-->
+            @if ($cart_items)
+            <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full hover:bg-blue-600">Passer à la caisse </button>
+            @endif
           </div>
         </div>
   
