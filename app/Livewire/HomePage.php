@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Auction;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -14,12 +15,19 @@ class HomePage extends Component
     {
         $brands = Brand::where('is_active', 1)->take(4)->get();
 
-        // Afficher seulement 8 catégories
+        // seulement 8 catégories
         $pieceoccassion = Category::where('is_active', 1)->take(8)->get();
+        //
+        $auctions = Auction::where('is_active', 1)
+        ->orderBy('created_at', 'desc')
+        ->take(4)
+        ->get();
+
 
         return view('livewire.home-page', [
             'brands' => $brands,
             'pieceoccassion' => $pieceoccassion,
+            'auctions' => $auctions,
         ]);
     }
 }

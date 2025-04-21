@@ -74,76 +74,62 @@
 </section>
 
 <!--Pièces en Enchères-->
+
 <div class="py-14 px-6 lg:px-20 bg-gray-100">
-  <h2 class="text-2xl lg:text-3xl font-bold mb-8 text-gray-900">
+  <h2 class="text-2xl text-center lg:text-3xl font-bold mb-8 text-gray-900">
     Pièces en Enchères
   </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-<!-- Carte Produit 1-->
-<div class="bg-white border rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out">
-  <img src="https://cdn.proxyparts.com/parts/101314/12690661/large/3048864e-5d12-478c-af48-72ad303dbf6b.jpg" alt="Moteur" class="h-[180px] w-full object-cover">
-  <div class="p-4">
-    <h3 class="font-semibold text-sm mb-1">Moteur 2.0 TDI</h3>
-    <p class="text-xs text-gray-600 mb-1">Volkswagen Golf 7</p>
-    <span class="inline-block bg-green-100 text-green-700 text-[10px] font-medium px-2 py-[1px] rounded mb-2">Reconditionné</span>
-    <div class="flex justify-between items-center mb-2">
-      <span class="text-blue-700 font-bold text-sm">2,500 TND</span>
-      <span class="text-red-500 text-[10px]">2h 15m</span>
+  @if($auctions->isEmpty())
+    <div class="text-center font-extrabold text-blac">
+      Aucune enchère active pour le moment.<br>
+      Revenez plus tard pour découvrir les nouvelles offres.
     </div>
-    <button class="w-full bg-gray-900 text-white text-xs py-2 rounded hover:bg-orange-700">Enchérir</button>
-  </div>
-</div>
-
-    <!-- Carte Produit 2 -->
-    <div class="bg-white border rounded-lg overflow-hidden shadow-xl transform hover:scale-105 hover:shadow-2xl transition duration-900">      <img src="https://cdn.proxyparts.com/parts/101277/15112028/large/faed19fc-b9c8-4fa9-9936-df792515d0b0.jpg" alt="Boite" class="h-[180px] w-full object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-sm mb-1">Boite de Vitesses</h3>
-        <p class="text-xs text-gray-600 mb-1">BMW</p>
-        <span class="inline-block bg-blue-100 text-blue-700 text-[10px] font-medium px-2 py-[1px] rounded mb-2">Neuf</span>
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-blue-700 font-bold text-sm">3,200 TND</span>
-          <span class="text-red-500 text-[10px]">4h 30m</span>
-        </div>
-        <button class="w-full bg-gray-900 text-white text-xs py-2 rounded hover:bg-orange-700">Enchérir</button>
-      </div>
-    </div>
-
-    <!-- Carte Produit 3 -->
-    <div class="bg-white border rounded-lg overflow-hidden shadow-xl  transform hover:scale-105 hover:shadow-2xl transition duration-900">      <img src="https://www.mikadoracing.com/annonces/images/2018_10/cb74a09ece7d8251a1660234c5f21ca3.jpg" alt="Freinage" class="h-[180px] w-full object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-sm mb-1">Kit Freinage Complet</h3>
-        <p class="text-xs text-gray-600 mb-1">BMW</p>
-        <span class="inline-block bg-yellow-100 text-yellow-700 text-[10px] font-medium px-2 py-[1px] rounded mb-2">Usagé</span>
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-blue-700 font-bold text-sm">800 TND</span>
-          <span class="text-red-500 text-[10px]">1h 45m</span>
-        </div>
-        <button class="w-full bg-gray-900 text-white text-xs py-2 rounded hover:bg-orange-700">Enchérir</button>
-      </div>
-    </div>
-        <!-- Carte Produit 4 -->
-        <div class="bg-white border rounded-lg overflow-hidden shadow-xl transform hover:scale-105 hover:shadow-2xl transition duration-900">          <img src="https://opisto-prod-pic.opisto.s3.eu-west-1.bso.st/4587/po_photo/2024/08/91209261-644d6389-acb8-4457-b091-ee3da5cf609a-Piece-Porte-avant-gauche-2047205900-MERCEDES-CLASSE-C-204-PHASE-1-74531a8591b55ddcc9b03a60b8698ef50a256b4caceba7ca392461eaed78ee1f_m.jpg" alt="Moteur" class="h-[180px] w-full object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-sm mb-1">Porte avant gauche</h3>
-            <p class="text-xs text-gray-600 mb-1">MERCEDES CLASSE C</p>
-            <span class="inline-block bg-green-100 text-green-700 text-[10px] font-medium px-2 py-[1px] rounded mb-2">Reconditionné</span>
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-blue-700 font-bold text-sm">1,100 TND</span>
-              <span class="text-red-500 text-[10px]">2h 15m</span>
-            </div>
-            <button class="w-full bg-gray-900 text-white text-xs py-2 rounded hover:bg-orange-700">Enchérir</button>
+  @else
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      @foreach ($auctions as $auction)
+      <div class="bg-white border rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out">
+        <img src="{{ $auction->product->images && is_array($auction->product->images) && count($auction->product->images) > 0 ? url('storage/'.$auction->product->images[0]) : asset('images/logo.png') }}" 
+             alt="{{ $auction->product->name }}" 
+             class="h-[180px] w-full object-cover">
+        <div class="p-4">
+          <h3 class="font-semibold text-sm mb-1">{{ $auction->product->name }}</h3>
+          <p class="text-xs text-gray-600 mb-1">{{ $auction->product->brand->name }}</p>
+          <span class="inline-block bg-green-100 text-green-700 text-[10px] font-medium px-2 py-[1px] rounded mb-2">
+            {{ $auction->product->on_sale ? 'En Promotion' : 'Reconditionné' }}
+          </span>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-blue-700 font-bold text-sm">{{ Number::currency($auction->current_price, 'TND') }}</span>
+            <span class="text-red-500 text-[10px]">
+              @if($auction->end_date->diffInDays(now()) > 0)
+                {{ $auction->end_date->diff(now())->format('%dd %Hh') }}
+              @else
+                {{ $auction->end_date->diff(now())->format('%Hh %Im') }}
+              @endif
+            </span>
           </div>
+          <a href="/auctions/{{ $auction->id }}" class="w-full bg-gray-900 text-white text-xs py-2 rounded hover:bg-orange-700 inline-block text-center">Enchérir</a>
         </div>
-  </div>
-
+      </div>
+      @endforeach
+    </div>
+    
   <div class="mt-8 text-center">
-    <button class="bg-black hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
+    <a href="/encheres" class="cursor-pointer bg-black hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
       Voir plus de produits en enchère
-    </button>
+    </a>
   </div>
-</div>
+  @endif
+
+</div>$
+
+
+    
+
+    
+  
+
+ 
 <!--pieceoccassion (catalogue catégories) -->
   <div class="py-20 px-4 lg:px-20 bg-white">
     <div class="max-w-7xl mx-auto">
