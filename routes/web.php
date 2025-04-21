@@ -15,8 +15,8 @@ use App\Livewire\MescommandesPages;
 use App\Livewire\PieceoccassionPages;
 use App\Livewire\SuccessPage;
 use App\Livewire\VerifierpaiementPage;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class);
 Route::get('/catalogue', CataloguePage::class);
@@ -26,7 +26,7 @@ Route::get('/pieceoccassion/{slug}', DetailpieceoccassionPage::class);
 
 // Middleware invité
 Route::middleware('guest')->group(function () {
-    Route::get('/login', LoginPage::class);
+    Route::get('/login', LoginPage::class)->name('login');  // Add ->name('login')
     Route::get('/register', RegisterPage::class);
     Route::get('/forgot', ForgotPasswordPage::class);
     Route::get('/reset', ResetPasswordPage::class);
@@ -36,6 +36,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', function () {
         Auth::logout();
+
         return redirect('/');
     })->name('logout');
 
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/success', SuccessPage::class);
     Route::get('/cancel', CancelPage::class);
     Route::get('/encheres', EncheresPages::class);
+    Route::get('/encheres/{id}', \App\Livewire\AuctionDetailPage::class)->name('auction.detail');
 });
 
 // Test View
