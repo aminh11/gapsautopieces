@@ -17,7 +17,7 @@ class HomePage extends Component
 
         // seulement 8 catégories
         $pieceoccassion = Category::where('is_active', 1)->take(8)->get();
-        //
+        //h
         $auctions = Auction::where('is_active', 1)
         ->orderBy('created_at', 'desc')
         ->take(4)

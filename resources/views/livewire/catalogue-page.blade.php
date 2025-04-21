@@ -37,3 +37,4 @@
             <a href="#" class="bg-red-600 text-white text-xs px-3 py-1 rounded-full hover:bg-red-700 transition">Plaquette</a>
             <a href="#" class="bg-red-600 text-white text-xs px-3 py-1 rounded-full hover:bg-red-700 transition">Kit Freinage</a>
           </div> -->
+          

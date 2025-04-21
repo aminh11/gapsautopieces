@@ -99,6 +99,7 @@
             {{ $auction->product->on_sale ? 'En Promotion' : 'Reconditionné' }}
           </span>
           <div class="flex justify-between items-center mb-2">
+          
             <span class="text-blue-700 font-bold text-sm">{{ Number::currency($auction->current_price, 'TND') }}</span>
             <span class="text-red-500 text-[10px]">
               @if($auction->end_date->diffInDays(now()) > 0)
