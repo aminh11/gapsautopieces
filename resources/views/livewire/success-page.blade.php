@@ -53,8 +53,8 @@
                   Méthode de paiement :
                 </p>
                 <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
-                  {{ $order->payment_method == 'cod' ? 'Paiement à la livraison' : '' }}
-                 </p>
+                  {{ $order->payment_method == 'cod'?'Cash_on_delivery':'card'}}
+              </p>
               </div>
             </div>
       

@@ -43,6 +43,7 @@ class VerifierpaiementPage extends Component
             'zip_code' => 'required',
             'payment_method' => 'required',
         ]);
+        
 
         $cart_items = CartManagement::getCartItemsFromCookie();
 

@@ -28,6 +28,8 @@ class Order extends Model {
     //relation address Model (une commande avoir une seule adresse)
     public function address(){
         return $this->hasOne(Address::class);
+        
+        
     }       
 }
 
