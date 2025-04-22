@@ -57,7 +57,6 @@ class OrderResource extends Resource
 
                         Select::make('payment_method')
                             ->options([
-                                'D17' => 'D17',
                                 'cash_on_delivery' => 'Cash on Delivery',])
                             ->required(),
 

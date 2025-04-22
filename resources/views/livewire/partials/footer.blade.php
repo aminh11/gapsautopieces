@@ -60,11 +60,6 @@
       <h4 class="text-white font-bold mb-2">Paiement Sécurisé</h4>
       <div class="flex flex-col gap-2 text-sm text-white">
     
-        <!-- Paiement par D17 -->
-        <div class="flex items-center gap-2">
-          <img src="https://play-lh.googleusercontent.com/lOgvUGpz6YUSXJG48kbzGrTEohIC8FDr_WkP6rwgaELR0g5o6OQu5-VPGexKoB8F0C-_" alt="Paiement D17" class="w-8 h-8">
-          <span>Paiement par D17</span>
-        </div>
     
         <!-- Paiement à la livraison -->
         <div class="flex items-center gap-2">
