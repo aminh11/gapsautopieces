@@ -3,9 +3,11 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Mail\OrderPlaced;
 use App\Models\Address;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -66,10 +68,10 @@ class VerifierpaiementPage extends Component
         $address->zip_code = $this->zip_code;
         $address->order_id = $order->id;
         $address->save();
-
         $order->items()->createMany($cart_items);
         CartManagement::clearCartItems();
-
+        
+        Mail::to(request()->user())->send(new OrderPlaced($order));
         return redirect()->route('success');
     }
 

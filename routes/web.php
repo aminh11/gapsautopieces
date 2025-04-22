@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/verifierpaiment', VerifierpaiementPage::class);
     Route::get('/mescommandes', MescommandesPages::class);
-    Route::get('/mescommandes/{commande}', DetailmescommandesPage::class);
+    Route::get('/mescommandes/{commande}', DetailmescommandesPage::class)->name('mes-commandes.afficher');
     Route::get('/success', SuccessPage::class)->name('success');
     Route::get('/cancel', CancelPage::class)->name('cancel');
     Route::get('/encheres', EncheresPages::class);
