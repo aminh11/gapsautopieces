@@ -1,0 +1,26 @@
+.scroller-track {
+    display: flex;
+    width: 200%;
+    animation: scroll-left 15s linear infinite;
+}
+
+.scroller-content {
+    flex: 0 0 50%;
+    white-space: nowrap;
+
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+
+}
+
+.bg-marquee {
+    background: linear-gradient(to right, #0e7df4, #007bff, #2c3e50);
+}
