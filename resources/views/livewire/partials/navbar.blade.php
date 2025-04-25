@@ -7,7 +7,7 @@
       <a href="/" class="flex items-center gap-2">
         <img src="{{ asset('images/logo2.png') }}" alt="Logo GAPS Auto Pièces" class="h-20 w-auto object-contain">
         <span class="text-xl font-bold text-gray-800 dark:text-white tracking-wide">
-          GAPS <span class="text-orange-600">Pièces Auto</span>
+          GAPS <span class="text-blue-500">Pièces Auto</span>
         </span>
       </a>
     </div>
@@ -25,12 +25,14 @@
         <span class="py-0.5 px-1.5 rounded-full text-xs bg-blue-50 border border-blue-200 text-blue-600">{{ $total_count }}</span>
       </a>
 
+      <!-- barre de Recherche -->
       <form action="{{ route('recherche') }}" method="GET" class="relative">
         <input
           type="text"
           name="q"
-          placeholder="Rechercher..."
-          class="py-2 px-3 w-40 lg:w-60 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm text-gray-800"
+          placeholder="Rechercher une pièce..."
+          class="py-2 px-3 w-40 lg:w-60 rounded-lg border border-blue-500 
+          focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm text-gray-800"
         >
         <button type="submit" class="absolute right-2 top-2 text-gray-400 hover:text-orange-600">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -48,8 +50,9 @@
 
       @auth
       <div class="relative" x-data="{ open: false }">
+
         <!-- Bouton -->
-        <button @click="open = !open" type="button" class="flex items-center gap-2 text-gray-700 dark:text-white font-medium hover:text-gray-500 focus:outline-none">
+        <button @click="open = !open" type="button" class="flex items-center gap-2 text-blue-500 dark:text-white font-medium hover:text-gray-500 focus:outline-none">
           {{ auth()->user()->name }}
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6" />
