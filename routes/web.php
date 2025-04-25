@@ -16,6 +16,7 @@ use App\Livewire\PieceoccassionPages;
 use App\Livewire\SuccessPage;
 use App\Livewire\VerifierpaiementPage;
 use App\Http\Controllers\RechercheController;
+use App\Livewire\MonComptePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cancel', CancelPage::class)->name('cancel');
     Route::get('/encheres', EncheresPages::class);
     Route::get('/encheres/{id}', \App\Livewire\AuctionDetailPage::class)->name('auction.detail');
+    Route::get('/mon-compte', MonComptePage::class)->middleware('auth');
+   
+
+    
 });
 
 // Test View
