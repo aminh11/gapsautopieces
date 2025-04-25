@@ -1,5 +1,6 @@
 <header class="sticky top-0 z-50 w-full bg-white shadow-md dark:bg-gray-800">
   <nav class="max-w-[85rem] mx-auto flex items-center justify-between px-4 md:px-6 lg:px-8">
+
     
     <!-- Logo + Texte -->
     <div class="flex items-center gap-3 mr-auto">
@@ -23,6 +24,20 @@
         <span>Panier</span>
         <span class="py-0.5 px-1.5 rounded-full text-xs bg-blue-50 border border-blue-200 text-blue-600">{{ $total_count }}</span>
       </a>
+
+      <form action="{{ route('recherche') }}" method="GET" class="relative">
+        <input
+          type="text"
+          name="q"
+          placeholder="Rechercher..."
+          class="py-2 px-3 w-40 lg:w-60 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm text-gray-800"
+        >
+        <button type="submit" class="absolute right-2 top-2 text-gray-400 hover:text-orange-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
+        </button>
+      </form>
 
       <!-- Auth -->
       @guest

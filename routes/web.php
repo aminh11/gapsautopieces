@@ -15,6 +15,7 @@ use App\Livewire\MescommandesPages;
 use App\Livewire\PieceoccassionPages;
 use App\Livewire\SuccessPage;
 use App\Livewire\VerifierpaiementPage;
+use App\Http\Controllers\RechercheController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,9 @@ Route::get('/catalogue', CataloguePage::class);
 Route::get('/pieceoccassion', PieceoccassionPages::class);
 Route::get('/cart', CartPage::class);
 Route::get('/pieceoccassion/{slug}', DetailpieceoccassionPage::class);
+Route::get('/recherche', [RechercheController::class, 'index'])->name('recherche');
+
+
 
 // Middleware invité
 Route::middleware('guest')->group(function () {
