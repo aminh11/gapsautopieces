@@ -1,0 +1,43 @@
+.card3d {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.4s ease;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    /* arrondir les coins */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card3d img {
+    width: 100%;
+    height: 16rem;
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.card3d:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Texte sous l'image */
+.card3d .text-content {
+    padding: 1rem;
+    text-align: center;
+}
+
+.card3d .text-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    /* gris foncé */
+}
+
+.card3d .text-content span {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    /* gris clair */
+}
