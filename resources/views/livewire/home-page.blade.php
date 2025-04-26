@@ -19,28 +19,69 @@
     </div>
   </div>
   
+<!-- Hero -->
+<div class="w-full bg-gray-200 py-8 px-4 lg:px-16">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
 
-  <!-- Hero -->
-  <div class="w-full bg-cover bg-center py-14 px-6 lg:px-20" style="background-image: url('/chemin/vers/ton-image.jpg');">
-    <div class="bg-black/50 w-full h-full py-10 px-6 lg:px-20">
-      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-        <div class="text-white">
-          <h1 class="text-4xl lg:text-6xl font-extrabold mb-6">
-            Trouvez la pièce parfaite <br> au meilleur prix !
-          </h1>
-          <p class="mb-8 text-lg">Découvrez notre large sélection de pièces automobiles d'occasion certifiées.</p>
-          <div class="flex flex-wrap gap-4">
-            <a href="/encheres" class="py-3 px-6 inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg">Explorer les Enchères</a>
-            <a href="/pieceoccassion" class="py-3 px-6 inline-block bg-black text-white font-semibold rounded-lg hover:bg-blue-600">Voir les Pièces d'Occasion</a>
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <img src="https://www.gpa26.com/img/cms/piece-auto.png" alt="Moteur" class="rounded-lg shadow-lg w-full max-w-[500px]">
-        </div>
+    <!-- Texte -->
+    <div class="text-gray-800">
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+        Trouvez la pièce parfaite <br> au meilleur prix !
+      </h1>
+      <p class="mb-6 text-lg md:text-xl">
+        Découvrez notre large sélection de pièces automobiles d'occasion certifiées.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="/encheres" class="py-2.5 px-5 inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg">
+          Explorer les Enchères
+        </a>
+        <a href="/pieceoccassion" class="py-2.5 px-5 inline-block bg-black text-white font-semibold rounded-lg hover:bg-blue-600">
+          Voir les Pièces d'Occasion
+        </a>
       </div>
     </div>
+
+    <!-- Image Changeante -->
+    <div class="flex justify-center">
+      <div 
+        x-data="{
+          images: [
+          '/images/client2.png',
+          '/images/piece.png',
+            '/images/promotion.png',
+            '/images/enchere.png'
+          ],
+          activeIndex: 0,
+          startSlider() {
+            setInterval(() => {
+              this.activeIndex = (this.activeIndex + 1) % this.images.length
+            }, 4000)
+          }
+        }"
+        x-init="startSlider()"
+        class="relative w-full h-[300px] md:h-[400px] bg-gray-300 overflow-hidden rounded-2xl shadow-xl"
+      >
+        <template x-for="(image, index) in images" :key="index">
+          <img
+            :src="image"
+            alt="Image Pièce Auto"
+            class="absolute top-0 left-0 w-full h-full object-cover transition-all duration-2000 ease-in-out"
+            :class="{
+              'opacity-100 scale-100': index === activeIndex,
+              'opacity-0 scale-110': index !== activeIndex
+            }"
+          >
+        </template>
+      </div>
+    </div>
+
   </div>
-  
+</div>
+
+<!-- Alpine.js -->
+<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+
   <!-- Animation des images -->
   <section class="relative h-screen w-full overflow-hidden">
     <div class="slider-container h-full w-full relative">
@@ -90,7 +131,7 @@
   <div class="max-w-xl mx-auto text-center">
     <h1 class="text-5xl font-bold dark:text-gray-200">
       Découvrez les <span class="text-blue-500">Marques Populaires</span>
-    </h1>
+</h1>
     <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
       <div class="flex-1 h-2 bg-blue-200"></div>
       <div class="flex-1 h-2 bg-blue-400"></div>
