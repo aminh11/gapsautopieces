@@ -138,24 +138,26 @@
     </div>
   </div>
 
-  <!-- Catalogue pièces d'occasion -->
-  <div class="py-20 px-4 lg:px-20 bg-white">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        @foreach ($pieceoccassion as $piece)
-        <a href="/pieceoccassion?selected_catalogue[0]={{ $piece->id }}" wire:key="{{ $piece->id }}"
-           class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition duration-300">
-          <img src="{{ url('storage/'.$piece->image) }}" alt="{{ $piece->name }}" class="w-full h-40 object-cover">
-          <div class="p-3 text-center">
-            <h3 class="font-semibold text-gray-800 group-hover:text-blue-600 capitalize text-sm">{{ $piece->name }}</h3>
+  <!-- Catalogue avec effet 3D animé -->
+<section class="py-20 px-4 lg:px-20 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      @foreach ($pieceoccassion as $piece)
+        <div class="card-3d-container">
+          <div class="card-3d">
+            <div class="card-image">
+              <img src="{{ url('storage/'.$piece->image) }}" alt="{{ $piece->name }}">
+            </div>
+            <div class="card-info">
+              <h3>{{ $piece->name }}</h3>
+              <a href="/pieceoccassion?selected_catalogue[0]={{ $piece->id }}" class="btn">Voir plus</a>
+            </div>
           </div>
-        </a>
-        @endforeach
-      </div>
-      <div class="flex justify-center mt-10">
-        <a href="/catalogue" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold text-sm">Explorer le Catalogue</a>
-      </div>
+        </div>
+      @endforeach
     </div>
   </div>
+</section>
+
 </div>
 <script src="{{ asset('vertical-slider.js') }}"></script>
