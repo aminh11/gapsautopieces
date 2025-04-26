@@ -1,4 +1,5 @@
 <div> <!-- ✅ seul élément racine -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
   <!-- texte défilant -->
   <div class="w-full bg-marquee overflow-hidden py-3">
@@ -39,6 +40,50 @@
       </div>
     </div>
   </div>
+  
+  <!-- Animation des images -->
+  <section class="relative h-screen w-full overflow-hidden">
+    <div class="slider-container h-full w-full relative">
+      <div class="left-slide absolute top-0 left-0 w-1/3 h-full transition-transform duration-500">
+        <div class="flex items-center justify-center flex-col text-white h-full" style="background-color: #2E2F32">
+          <h1 class="text-4xl mb-2">Contrôlez vos feux</h1>
+          <p>Phares, clignotants, feux arrière</p>
+        </div>
+
+        <div class="flex items-center justify-center flex-col text-black h-full" style="background-color: #D8D9DA">
+          <h1 class="text-4xl mb-2">Vérifiez la Pression des Pneus</h1>
+          <p>Confort, sécurité et économies de carburant assurés</p>
+        </div>
+
+        <div class="flex items-center justify-center flex-col text-white h-full" style="background-color: #7C7C7C">
+          <h1 class="text-4xl mb-2">Surveillez vos Freins</h1>
+          <p>Remplacez disques et plaquettes dès les premiers signes d’usure</p>
+        </div>
+
+        <div class="flex items-center justify-center flex-col text-white h-full" style="background-color: #3B4DC5">
+          <h1 class="text-4xl mb-2">Vérifiez votre Moteur</h1>
+          <p>Vidange, filtres et courroies à surveiller régulièrement</p>
+        </div>
+      </div>
+
+      <div class="right-slide absolute top-0 left-1/3 w-2/3 h-full transition-transform duration-500">
+        <div class="bg-cover bg-center w-full h-full" style="background-image: url('{{ asset('images/moteuramg.jpg') }}');"></div>
+        <div class="bg-cover bg-center w-full h-full" style="background-image: url('{{ asset('images/frien.jpg') }}');"></div>
+        <div class="bg-cover bg-center w-full h-full" style="background-image: url('{{ asset('images/pression.jpg') }}');"></div>        
+        <div class="bg-cover bg-center w-full h-full" style="background-image: url('{{ asset('images/feux.jpg') }}');"></div>
+      </div>
+  
+      <div class="action-buttons absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-2">
+        <button class="up-button bg-white p-3 rounded-full shadow-md hover:bg-gray-100">
+          <i class="fas fa-arrow-up text-gray-700"></i>
+        </button>
+        <button class="down-button bg-white p-3 rounded-full shadow-md hover:bg-gray-100">
+          <i class="fas fa-arrow-down text-gray-700"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+  
 
   <!-- Marques Populaires -->
   <section class="py-20">
@@ -112,5 +157,5 @@
       </div>
     </div>
   </div>
-
 </div>
+<script src="{{ asset('vertical-slider.js') }}"></script>
