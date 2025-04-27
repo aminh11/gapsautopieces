@@ -11,6 +11,7 @@ class Auction extends Model
 
     protected $fillable = [
         'product_id',
+        'carbrand_id',
         'starting_price',
         'current_price',
         'reserve_price',
@@ -19,7 +20,7 @@ class Auction extends Model
         'end_date',
         'is_active',
         'status',
-        'winner_id'
+        'winner_id',
     ];
 
     protected $casts = [
@@ -59,5 +60,10 @@ class Auction extends Model
     public function hasEnded()
     {
         return now()->isAfter($this->end_date) || $this->status === 'ended';
+    }
+
+    public function carbrand()
+    {
+        return $this->belongsTo(Carbrand::class, 'carbrand_id');
     }
 }

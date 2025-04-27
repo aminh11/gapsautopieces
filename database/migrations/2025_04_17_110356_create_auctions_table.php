@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('auctions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            
+            
+            $table->foreignId('carbrand_id')->nullable()->constrained('carbrands')->nullOnDelete();
+            
             $table->decimal('starting_price', 10, 2);
             $table->decimal('current_price', 10, 2);
             $table->decimal('reserve_price', 10, 2)->nullable();

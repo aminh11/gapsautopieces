@@ -6,15 +6,18 @@ use App\Filament\Resources\AuctionResource\Pages;
 use App\Models\Auction;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Carbrand;
 use Filament\Forms;
+use Filament\Forms\Form;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
@@ -22,17 +25,13 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class AuctionResource extends Resource
 {
     protected static ?string $model = Auction::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
-
     protected static ?string $navigationLabel = 'Enchères';
-
     protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
@@ -44,6 +43,13 @@ class AuctionResource extends Resource
                         Select::make('product_id')
                             ->label('Produit')
                             ->options(Product::query()->pluck('name', 'id'))
+                            ->searchable()
+                            ->required(),
+
+                        // 👉 Association carbrand
+                        Select::make('carbrand_id')
+                            ->label('Marque de voiture')
+                            ->options(Carbrand::query()->pluck('name', 'id'))
                             ->searchable()
                             ->required(),
 
@@ -115,8 +121,14 @@ class AuctionResource extends Resource
 
                 TextColumn::make('product.name')
                     ->label('Produit')
-                    ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
+
+                // 👉 Affichage carbrand
+                TextColumn::make('carbrand.name')
+                    ->label('Marque')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('starting_price')
                     ->label('Prix de départ')
@@ -159,18 +171,25 @@ class AuctionResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('status')
+                    ->label('Statut')
                     ->options([
                         'pending' => 'En attente',
                         'active' => 'Active',
                         'ended' => 'Terminée',
                         'canceled' => 'Annulée',
                     ]),
+
                 SelectFilter::make('is_active')
                     ->label('Active')
                     ->options([
                         '1' => 'Oui',
                         '0' => 'Non',
                     ]),
+
+                // 👉 Filtre par Marque de voiture
+                SelectFilter::make('carbrand')
+                    ->relationship('carbrand', 'name')
+                    ->label('Marque de voiture'),
             ])
             ->actions([
                 ActionGroup::make([

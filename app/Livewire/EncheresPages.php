@@ -3,37 +3,34 @@
 namespace App\Livewire;
 
 use App\Models\Auction;
-use Livewire\Attributes\Title;
+use App\Models\Carbrand;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Url;
 
-#[Title('Page Encheres - GAPS')]
-
+#[Title('Enchères - GAPS')]
 class EncheresPages extends Component
 {
     use WithPagination;
 
+    #[Url]
+    public $selected_carbrands = [];
+
     public function render()
     {
-        // Get active auctions
-        $activeAuctions = Auction::where('is_active', true)
-        ->where('status', 'active')
-        // ->where('start_date', '<=', now())
-        // ->where('end_date', '>=', now())
-        ->with(['product', 'bids.user'])
-        ->paginate(8);
+        $auctionQuery = Auction::query()
+            ->where('is_active', true)
+            ->where('status', 'active');
 
-        // Get upcoming auctions
-        $upcomingAuctions = Auction::where('is_active', true)
-            ->where('status', 'pending')
-            ->where('start_date', '>', now())
-            ->with(['product'])
-            ->take(4)
-            ->get();
+        // filtre sur la marque de voiture
+        if (!empty($this->selected_carbrands)) {
+            $auctionQuery->whereIn('carbrand_id', $this->selected_carbrands);
+        }
 
         return view('livewire.encheres-pages', [
-            'auctions' => $activeAuctions,
-            'upcomingAuctions' => $upcomingAuctions,
+            'auctions' => $auctionQuery->with(['product', 'bids', 'carbrand'])->paginate(9),
+            'carbrands' => Carbrand::orderBy('name')->get(['id', 'name']),
         ]);
     }
 }
