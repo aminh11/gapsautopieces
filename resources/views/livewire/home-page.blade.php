@@ -126,62 +126,65 @@
   </section>
   
 
-<!-- Marques Populaires -->
-<section class="py-20">
-  <div class="max-w-xl mx-auto text-center">
-    <h1 class="text-5xl font-bold dark:text-gray-200">
-      Découvrez les <span class="text-blue-500">Marques Populaires</span>
-</h1>
-    <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
-      <div class="flex-1 h-2 bg-blue-200"></div>
-      <div class="flex-1 h-2 bg-blue-400"></div>
-      <div class="flex-1 h-2 bg-blue-600"></div>
-    </div>
-    <p class="mb-12 text-base text-gray-500">
-      Retrouvez les marques les plus connues et les plus appréciées sur notre plateforme.
-    </p>
-  </div>
+<!-- Pièces en Enchères -->
+<div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+  <h1 class="text-3xl font-bold text-gray-800 mb-8">Pièces en Enchères</h1>
 
-  <div class="justify-center max-w-6xl px-4 py-4 mx-auto lg:py-0">
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-2">
-      @foreach ($brands as $brand)
-      <div class="card3d bg-white rounded-lg shadow-md dark:bg-gray-800 transition-transform duration-300" wire:key="{{ $brand->id }}">
-        <a href="/pieceoccassion?selected_brands[0]={{ $brand->id }}">
-          <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" class="object-cover w-full h-64 rounded-t-lg">
+  @if($auctionProducts->isEmpty())
+    <div class="text-center py-12">
+      <h2 class="text-xl font-medium text-gray-600">Aucune enchère active pour le moment</h2>
+      <p class="mt-2 text-gray-500">Revenez plus tard pour voir les nouvelles enchères</p>
+    </div>
+  @else
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @foreach($auctionProducts as $auction)
+      <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <a href="{{ route('auction.detail', $auction->id) }}" class="block">
+        @if($auction->product && $auction->product->images && is_array($auction->product->images) && count($auction->product->images) > 0)
+          <img src="{{ asset('storage/' . $auction->product->images[0]) }}" 
+               alt="{{ $auction->product->name }}" 
+               class="w-full h-48 object-cover">
+      @else
+          <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-400">Pas d'image</span>
+          </div>
+      @endif
+          <div class="p-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">
+              {{ $auction->product?->name ?? 'Produit inconnu' }}
+            </h3>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-sm text-gray-500">Prix actuel:</span>
+              <span class="text-lg font-bold text-blue-600">
+                {{ number_format($auction->current_price, 2) }} TND
+              </span>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-sm text-gray-500">Enchères:</span>
+              <span class="text-sm font-medium">
+                {{ $auction->bids->count() }}
+              </span>
+            </div>
+            <div class="bg-gray-100 p-2 rounded-lg text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>Fin:</span>
+                <span>{{ $auction->end_date->format('d/m/Y H:i') }}</span>
+              </div>
+            </div>
+          </div>
         </a>
-        <div class="p-5 text-center">
-          <span class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">{{ $brand->name }}</span>
-        </div>
       </div>
       @endforeach
     </div>
-  </div>
-</section>
 
-  <!-- Pièces en Enchères -->
-  <div class="py-14 px-6 lg:px-20 bg-gray-100">
-    <h2 class="text-2xl lg:text-3xl font-bold mb-8 text-gray-900">Pièces en Enchères</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <!-- Exemple produit -->
-      <div class="bg-white border rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out">
-        <img src="https://cdn.proxyparts.com/parts/101314/12690661/large/3048864e-5d12-478c-af48-72ad303dbf6b.jpg" alt="Moteur" class="h-[180px] w-full object-cover">
-        <div class="p-4">
-          <h3 class="font-semibold text-sm mb-1">Moteur 2.0 TDI</h3>
-          <p class="text-xs text-gray-600 mb-1">Volkswagen Golf 7</p>
-          <span class="inline-block bg-green-100 text-green-700 text-[10px] font-medium px-2 py-[1px] rounded mb-2">Reconditionné</span>
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-blue-700 font-bold text-sm">2,500 TND</span>
-            <span class="text-red-500 text-[10px]">2h 15m</span>
-          </div>
-          <button class="w-full bg-gray-900 text-white text-xs py-2 rounded hover:bg-orange-700">Enchérir</button>
-        </div>
-      </div>
-      <!-- Répète pour d'autres produits ou boucle dynamique -->
-    </div>
     <div class="mt-8 text-center">
-      <a href="/encheres" class="bg-black hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">Voir plus de produits en enchère</a>
+      <a href="/encheres" class="bg-black hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
+        Voir plus de produits en enchère
+      </a>
     </div>
-  </div>
+  @endif
+</div>
+
 
   <!-- Catalogue avec effet 3D animé -->
 <section class="py-20 px-4 lg:px-20 bg-white">

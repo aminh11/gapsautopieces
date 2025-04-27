@@ -28,40 +28,34 @@ class Auction extends Model
         'is_active' => 'boolean',
     ];
 
-    // Relationship with Product
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    // Relationship with User (winner)
     public function winner()
     {
         return $this->belongsTo(User::class, 'winner_id');
     }
 
-    // Relationship with Bids
     public function bids()
     {
         return $this->hasMany(AuctionBid::class);
     }
 
-    // Get the highest bid
     public function highestBid()
     {
         return $this->bids()->orderBy('amount', 'desc')->first();
     }
 
-    // Check if auction is active
     public function isActive()
     {
         $now = now();
-        return $this->is_active && 
-               $this->status === 'active' && 
+        return $this->is_active &&
+               $this->status === 'active' &&
                $now->between($this->start_date, $this->end_date);
     }
 
-    // Check if auction has ended
     public function hasEnded()
     {
         return now()->isAfter($this->end_date) || $this->status === 'ended';
