@@ -23,7 +23,7 @@ class HomePage extends Component
             ->where('status', 'active')
             ->where('end_date', '>', now())
             ->orderBy('end_date', 'asc')
-            ->take(8)
+            ->take(5)
             ->get();
 
         return view('livewire.home-page', [

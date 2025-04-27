@@ -124,6 +124,38 @@
       </div>
     </div>
   </section>
+
+  <!-- Marques Populaires -->
+<section class="py-20">
+  <div class="max-w-xl mx-auto text-center">
+    <h1 class="text-5xl font-bold dark:text-gray-200">
+      Découvrez les <span class="text-blue-500">Marques Populaires</span>
+    </h1>
+    <div class="flex w-40 mt-2 mb-6 overflow-hidden rounded">
+      <div class="flex-1 h-2 bg-blue-200"></div>
+      <div class="flex-1 h-2 bg-blue-400"></div>
+      <div class="flex-1 h-2 bg-blue-600"></div>
+    </div>
+    <p class="mb-12 text-base text-gray-500">
+      Retrouvez les marques les plus connues et les plus appréciées sur notre plateforme.
+    </p>
+  </div>
+
+  <div class="justify-center max-w-6xl px-4 py-4 mx-auto lg:py-0">
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-2">
+      @foreach ($brands as $brand)
+      <div class="card3d bg-white rounded-lg shadow-md dark:bg-gray-800 transition-transform duration-300" wire:key="{{ $brand->id }}">
+        <a href="/pieceoccassion?selected_brands[0]={{ $brand->id }}">
+          <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}" class="object-cover w-full h-64 rounded-t-lg">
+        </a>
+        <div class="p-5 text-center">
+          <span class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">{{ $brand->name }}</span>
+        </div>
+      </div>
+      @endforeach
+    </div>
+  </div>
+</section>
   
 
 <!-- Pièces en Enchères -->
@@ -209,3 +241,4 @@
 
 </div>
 <script src="{{ asset('vertical-slider.js') }}"></script>
+
