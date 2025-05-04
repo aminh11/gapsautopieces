@@ -33,7 +33,7 @@ class Product extends Model {
     } 
     //relation order Model(le produit appartenir à la commande produits)
     public function orderItems(){
-        return $this->belongsTo(OrderItem::class);
-    }       
+        return $this->hasMany(OrderItem::class);
+    }     
 }
 
