@@ -29,25 +29,25 @@ class AuctionDetailPage extends Component
     
     public function placeBid()
     {
-        // Check if user is authenticated
+        //Vérifier si l'utilisateur est authentifié
         if (!auth()->check()) {
             return redirect()->route('login');
         }
         
-        // Validate bid amount
+        // Valider le montant de l'enchère
         $this->validate([
             'bidAmount' => 'required|numeric|min:' . ($this->auction->current_price + $this->auction->bid_increment),
         ], [
             'bidAmount.min' => 'Votre enchère doit être supérieure à ' . ($this->auction->current_price + $this->auction->bid_increment) . ' TND',
         ]);
         
-        // Check if auction is still active
+        // Vérifiez si l'enchère est toujours active
         if (!$this->auction->isActive()) {
             LivewireAlert::error('Cette enchère est terminée');
             return;
         }
         
-        // Create new bid
+        // Créer une nouvelle enchère
         $bid = new AuctionBid();
         $bid->auction_id = $this->auction->id;
         $bid->user_id = auth()->id();
@@ -55,22 +55,22 @@ class AuctionDetailPage extends Component
         $bid->is_winning = true;
         $bid->save();
         
-        // Update auction current price
+        // Mettre à jour le prix actuel des enchères
         $this->auction->current_price = $this->bidAmount;
         $this->auction->save();
         
-        // Set all other bids as not winning
+        // Définir toutes les autres enchères comme non gagnantes
         AuctionBid::where('auction_id', $this->auction->id)
             ->where('id', '!=', $bid->id)
             ->update(['is_winning' => false]);
         
-        // Reset bid amount
+        // Réinitialiser le montant de l'enchère
         $this->reset('bidAmount');
         
-        // Reload auction
+        // Recharger les enchères
         $this->loadAuction();
         
-        // Show success message
+        // Afficher le message de réussite
         LivewireAlert::success('Enchère placée avec succès!');
     }
     

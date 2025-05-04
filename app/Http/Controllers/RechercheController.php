@@ -8,13 +8,15 @@ use App\Models\Product;
 class RechercheController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = $request->input('q');
+{
+    $query = $request->input('q');
 
-        $resultats = Product::where('name', 'LIKE', '%' . $query . '%')
-            ->orWhere('description', 'LIKE', '%' . $query . '%')
-            ->get();
+    $resultats = Product::where('name', 'LIKE', '%' . $query . '%')
+        ->orWhere('description', 'LIKE', '%' . $query . '%')
+        ->get();
 
-        return view('resultats', compact('query', 'resultats'));
-    }
+    $count = $resultats->count(); 
+
+    return view('resultats', compact('query', 'resultats', 'count'));
+}
 }

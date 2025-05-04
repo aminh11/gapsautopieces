@@ -20,7 +20,7 @@
         @endif
     </div>
 
-    <!-- Informations Produit -->
+    <!-- Informations des Produits -->
     <div>
         <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ $auction->product->name }}</h2>
         <span class="text-green-600 text-sm font-medium mb-4 inline-block">

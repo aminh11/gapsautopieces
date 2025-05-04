@@ -1,6 +1,9 @@
 <x-layouts.app :title="'Résultats de recherche'">
     <div class="max-w-7xl mx-auto py-10 px-4">
-        <h1 class="text-2xl font-bold text-orange-600 mb-6">Résultats pour : "{{ $query }}"</h1>
+        <h1 class="text-2xl font-bold text-orange-600 mb-6">
+            Résultats pour : "{{ $query }}" ({{ $count }} résultat{{ $count > 1 ? 's' : '' }})
+        </h1>
+        
 
         @if($resultats->isEmpty())
             <p class="text-gray-500">Aucun résultat trouvé.</p>

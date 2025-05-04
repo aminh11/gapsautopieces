@@ -46,32 +46,46 @@
       </aside>
   
       <!-- Main content -->
-      <section class="md:w-3/4">
-        @if ($tab === 'profil')
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Informations personnelles</h2>
-          <form wire:submit.prevent="updateProfil" class="bg-white p-6 rounded-lg shadow space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Nom</label>
-                <input type="text" wire:model.defer="name"
-                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
-                @error('name') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" wire:model.defer="email"
-                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
-                @error('email') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
-              </div>
-            </div>
-            <div class="text-right">
-              <button type="submit"
-                      class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                Sauvegarder
-              </button>
-            </div>
-          </form>
-        @endif
+<section class="md:w-3/4">
+  @if ($tab === 'profil')
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Informations personnelles</h2>
+    <form wire:submit.prevent="updateProfil" class="bg-white p-6 rounded-lg shadow space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Nom -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Nom</label>
+          <input type="text" wire:model.defer="name"
+                 class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+          @error('name') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" wire:model.defer="email"
+                 class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+          @error('email') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+        </div>
+
+        <!-- Numéro de téléphone -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
+          <input type="text" wire:model.defer="phone"
+                 class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+          @error('phone') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+        </div>
+      </div>
+
+      <div class="text-right">
+        <button type="submit"
+                class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+          Sauvegarder
+        </button>
+      </div>
+    </form>
+  @endif
+</section>
+
   
         @if ($tab === 'commandes')
           <h2 class="text-2xl font-bold text-gray-800 mb-6">Historique des Commandes</h2>
