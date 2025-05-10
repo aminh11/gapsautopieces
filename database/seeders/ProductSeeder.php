@@ -5,18 +5,17 @@ namespace Database\Seeders;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Carbrand;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $categories = Category::all();
         $brands = Brand::all();
+        $carbrand = Carbrand::first(); 
 
         $products = [
             [
@@ -70,7 +69,8 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'Radiateur de refroidissement',
-                'description' => 'Radiateur de refroidissement en aluminium pour une meilleure dissipation thermique.',
+                'description' => 'Radiateur de refroidissement en aluminium pour une meilleure dissipation 
+                thermique.',
                 'price' => 110.25,
                 'category' => 'Moteur',
                 'brand' => 'Hella',
@@ -109,7 +109,7 @@ class ProductSeeder extends Seeder
             $category = $categories->where('name', $productData['category'])->first();
             $brand = $brands->where('name', $productData['brand'])->first();
 
-            if ($category && $brand) {
+            if ($category && $brand && $carbrand) {
                 Product::create([
                     'name' => $productData['name'],
                     'slug' => Str::slug($productData['name']),
@@ -117,6 +117,7 @@ class ProductSeeder extends Seeder
                     'price' => $productData['price'],
                     'category_id' => $category->id,
                     'brand_id' => $brand->id,
+                    'carbrand_id' => $carbrand->id, 
                     'is_active' => true,
                     'is_featured' => rand(0, 1),
                     'in_stock' => true,

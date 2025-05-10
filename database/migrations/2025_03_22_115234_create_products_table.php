@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
+            $table->foreignId('carbrand_id')->constrained('carbrands')->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
             $table->json('images')->nullable();

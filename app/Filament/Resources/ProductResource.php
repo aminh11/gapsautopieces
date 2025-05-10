@@ -100,7 +100,14 @@ class ProductResource extends Resource
                                     ->required()
                                     ->searchable()
                                     ->preload()
-                                    ->relationship('brand', 'name')
+                                    ->relationship('brand', 'name'),
+
+                                Select::make('carbrand_id') 
+                                    ->label('Marque de voiture')
+                                    ->required()
+                                    ->searchable()
+                                    ->preload()
+                                    ->relationship('carbrand', 'name') 
                             ]),
 
                             Section::make('Status')->schema([

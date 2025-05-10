@@ -10,6 +10,7 @@ class Product extends Model {
 
     protected $fillable = ['category_id', 
     'brand_id', 
+    'carbrand_id',
     'name', 
     'slug', 
     'images', 
@@ -31,9 +32,15 @@ class Product extends Model {
     public function brand(){
         return $this->belongsTo(Brand::class);
     } 
+    //relation carbrand Model(le produit appartenir à la marque de voiture)
+    public function carbrand()
+    {
+    return $this->belongsTo(Carbrand::class);
+    }
     //relation order Model(le produit appartenir à la commande produits)
     public function orderItems(){
         return $this->hasMany(OrderItem::class);
+
     }     
 }
 
